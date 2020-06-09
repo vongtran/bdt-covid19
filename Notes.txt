@@ -1,0 +1,29 @@
+5. Installing and starting Zookeeper
+https://archive.apache.org/dist/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz 
+
+curl -O https://archive.apache.org/dist/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+
+ar -zxf zookeeper-3.4.10.tar.gz
+sudo mv zookeeper-3.4.10 /usr/local/zookeeper
+sudo mkdir -p /var/lib/zookeeper
+cat > /usr/local/zookeeper/conf/zoo.cfg EOF
+vim /usr/local/zookeeper/conf/zoo.cfg
+> tickTime=2000
+> dataDir=/var/lib/zookeeper
+> clientPort=2181
+> EOF
+sudo /usr/local/zookeeper/bin/zkServer.sh start
+
+6. Installing and starting Kafka
+
+
+curl -O https://archive.apache.org/dist/kafka/2.0.0/kafka_2.12-2.0.0.tgz
+
+tar -zxf kafka_2.12-2.0.0.tgz
+sudo mv kafka_2.12-2.0.0 /usr/local/kafka
+sudo mkdir /tmp/kafka-logs
+sudo /usr/local/kafka/bin/kafka-server-start.sh -daemon /usr/local/kafka/config/server.properties
+
+//create kafka topic
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic twitterTopic
+
